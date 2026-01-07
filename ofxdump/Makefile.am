@@ -8,21 +8,21 @@ AM_CPPFLAGS = \
 	'-DCMDLINE_PARSER_PACKAGE="ofxdump"'
 
 if USE_GENGETOPT 
-CLEANFILES = cmdline.c cmdline.h
 
 cmdline.c cmdline.h: cmdline.ggo Makefile
 	gengetopt --unamed-opts < $<
 
 endif
 
-ofxdump.1: $(top_srcdir)/configure.ac
+ofxdump.1: $(top_srcdir)/configure.ac ofxdump
 if HAVE_HELP2MAN
 	$(HELP2MAN) -n 'Dump content of OFX files as human-readable text' -N --output=ofxdump.1 ./ofxdump$(EXEEXT)
 else
 	echo "*** No man page available because of missing help2man tool" > $@
 endif
 
-MAINTAINERCLEANFILES  = cmdline.c cmdline.h
+CLEANFILES = cmdline.c cmdline.h ofxdump.1
+MAINTAINERCLEANFILES  = cmdline.c cmdline.h ofxdump.1
 EXTRA_DIST = cmdline.ggo CMakeLists.txt
 
 # Run all our example files through ofxdump to verify we can parse

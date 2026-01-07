@@ -11,13 +11,14 @@ AM_CPPFLAGS = \
 
 
 if USE_GENGETOPT 
-CLEANFILES = cmdline.c cmdline.h
 
 cmdline.c cmdline.h: cmdline.ggo Makefile
 	gengetopt --unamed-opts < $<
 
 endif
-MAINTAINERCLEANFILES  = cmdline.c cmdline.h
+
+CLEANFILES = cmdline.c cmdline.h ofxconnect.1
+MAINTAINERCLEANFILES  = cmdline.c cmdline.h ofxconnect.1
 
 EXTRA_DIST = cmdline.ggo test-privateserver.sh CMakeLists.txt
 
@@ -25,7 +26,7 @@ EXTRA_DIST = cmdline.ggo test-privateserver.sh CMakeLists.txt
 # the key needed to run this test.
 TESTS = test-privateserver.sh 
 
-ofxconnect.1: $(top_srcdir)/configure.ac
+ofxconnect.1: $(top_srcdir)/configure.ac ofxconnect
 if HAVE_HELP2MAN
 	$(HELP2MAN)  -n 'Create a statement request file' -N --output=ofxconnect.1 ./ofxconnect$(EXEEXT)
 else
